@@ -1,18 +1,24 @@
-const HashtagList = () => {
+import HashTagItem from "./HashTagItem";
+
+type HashtagListProps = {
+  handleSelectedCompany: (text: string) => void;
+  companyList: string[];
+};
+const HashtagList = ({
+  companyList,
+  handleSelectedCompany,
+}: HashtagListProps) => {
   return (
     <ul className="hashtags">
-      <li>
-        {" "}
-        <button>#awesome</button>
-      </li>
-      <li>
-        {" "}
-        <button>#Nike</button>
-      </li>
-      <li>
-        {" "}
-        <button>#Mc'Donald's</button>
-      </li>
+      {companyList.map((company) => {
+        return (
+          <HashTagItem
+            key={company}
+            company={company}
+            onClick={handleSelectedCompany}
+          />
+        );
+      })}
     </ul>
   );
 };

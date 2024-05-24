@@ -1,25 +1,29 @@
-import { TriangleUpIcon } from "@radix-ui/react-icons";
+import FeedbackItem from "./FeedbackItem";
+import Spinner from "./Spinner";
+import ErrorMessage from "./ErrorMessage";
+import { TFeedbackItem } from "../lib/type";
 
-const FeedbackList = () => {
+type FeedbackListProps = {
+  feedbackItems: TFeedbackItem[];
+  isLoading: boolean;
+  errorMessage: string;
+};
+
+const FeedbackList = ({
+  feedbackItems,
+  isLoading,
+  errorMessage,
+}: FeedbackListProps) => {
   return (
     <ol className="feedback-list">
-      <li className="feedback">
-        <button>
-          <TriangleUpIcon />
-          <span>593</span>
-        </button>
-        <div>
-          <p>B</p>
-        </div>
-        <div>
-          <p>D.Yordanov</p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
-            alias incidunt dolores, excepturi reprehenderit fugiat?
-          </p>
-        </div>
-        <p>4</p>
-      </li>
+      {isLoading && <Spinner />}
+      {errorMessage && <ErrorMessage message={errorMessage} />}
+
+      {feedbackItems.map((feedbackItem) => {
+        return (
+          <FeedbackItem key={feedbackItem.id} feedbackItem={feedbackItem} />
+        );
+      })}
     </ol>
   );
 };

@@ -3,13 +3,17 @@ import Logo from './Logo'
 import PageHeading from './PageHeading'
 import Pattern from './Pattern'
 
-const Header = () => {
+type HeaderProps = {
+  handleItemList: (text: string) => void
+}
+
+const Header = ({handleItemList}:HeaderProps) => {
   return (
     <header className='header'>
         <Pattern />
         <Logo />
         <PageHeading />
-        <FeedbackForm />
+        <FeedbackForm handleItemList={handleItemList} />
     </header>
   )
 }

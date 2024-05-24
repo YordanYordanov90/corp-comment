@@ -1,19 +1,36 @@
 import { useState } from "react";
-const MAX_CHARS = 150;
-const FeedbackForm = () => {
+
+import { MAX_CHARS } from "../lib/constants";
+
+type FeedbackFormProps = {
+  handleItemList: (text: string) => void;
+};
+
+const FeedbackForm = ({ handleItemList }: FeedbackFormProps) => {
   const [text, setText] = useState("");
   const charsLeft = MAX_CHARS - text.length;
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = e.target.value;
+
+    if (newText.length > MAX_CHARS) {
+      return;
+    }
+    setText(newText);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleItemList(text);
+    setText("");
+  };
   return (
-    <form className="form">
+    <form onSubmit={handleSubmit} className="form">
       <textarea
         value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-        }}
+        onChange={handleChange}
         id="feedback-textarea"
         placeholder=""
         spellCheck={false}
-        maxLength={MAX_CHARS}
       />
       <label htmlFor="feedback-textarea">Enter your feedback here</label>
       <div>
